@@ -19,11 +19,13 @@ const Navbar = ({ isTransparent, tailwindColor }: NavProps) => {
     { label: "Github", path: "#", icon: <i className="ri-github-line text-base"></i> },
     { label: "Slack", path: "#", icon: <i className="ri-slack-line text-base"></i> },
     { label: "Sign up", path: "#" },
-    { label: "Login", path: "#" },
+    { label: "Login", path: "/login" },
   ];
 
   return (
-    <nav className={`${isTransparent && "bg-transparent"} ${tailwindColor && tailwindColor}`}>
+    <nav
+      className={`sticky top-0 w-full z-[1000] ${isTransparent && "bg-transparent"} ${tailwindColor && tailwindColor}`}
+    >
       <WidthWrapper addClass="flex items-center gap-28 justify-between">
         <Link href="/" className="text-lg">
           BG<span className="text-purple-600">.</span>

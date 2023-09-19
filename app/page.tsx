@@ -1,5 +1,4 @@
 import WidthWrapper from "@/components/Common/width-wrapper";
-import Navbar from "@/components/Layout/Navbar";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faChevronRight, faSearch } from "@fortawesome/free-solid-svg-icons";
