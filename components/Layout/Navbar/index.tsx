@@ -7,6 +7,7 @@ interface NavLinks {
   label: string;
   path: string;
   icon?: JSX.Element;
+  external?: boolean;
 }
 
 interface NavProps {
@@ -16,9 +17,14 @@ interface NavProps {
 
 const Navbar = ({ isTransparent, tailwindColor }: NavProps) => {
   const links: NavLinks[] = [
-    { label: "Github", path: "#", icon: <i className="ri-github-line text-base"></i> },
-    { label: "Slack", path: "#", icon: <i className="ri-slack-line text-base"></i> },
-    { label: "Sign up", path: "#" },
+    {
+      label: "Github",
+      path: "https://github.com/benjaminnkem/hngx-gallery-app",
+      icon: <i className="ri-github-line text-base"></i>,
+      external: true,
+    },
+    { label: "Slack", path: "#", icon: <i className="ri-slack-line text-base"></i>, external: true },
+    { label: "Sign up", path: "/signup" },
     { label: "Login", path: "/login" },
   ];
 
@@ -38,8 +44,9 @@ const Navbar = ({ isTransparent, tailwindColor }: NavProps) => {
                 href={link.path}
                 className={`${
                   idx === links.length - 1 &&
-                  "bg-gray-700 duration-200 hover:bg-gray-800 text-white px-5 text-sm py-[.3rem] rounded-2xl"
+                  "bg-gray-700 duration-200 flex-shrink-0 hover:bg-gray-800 text-white px-5 text-sm py-[.3rem] rounded-2xl"
                 }`}
+                target={link.external ? "_blank" : "_self"}
               >
                 {link.icon ? link.icon : link.label}
               </Link>

@@ -1,4 +1,5 @@
 "use client";
+import { AnimatePresence } from "framer-motion";
 import { Toaster, ToastPosition } from "react-hot-toast";
 
 const Provider = ({ children }: { children: React.ReactNode }) => {
@@ -22,8 +23,10 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <>
-      <Toaster toastOptions={toastConfig} />
-      {children}
+      <AnimatePresence>
+        <Toaster toastOptions={toastConfig} />
+        {children}
+      </AnimatePresence>
     </>
   );
 };

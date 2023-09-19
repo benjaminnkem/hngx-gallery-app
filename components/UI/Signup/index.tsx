@@ -1,17 +1,16 @@
 "use client";
 
+import { TransitionElement } from "@/lib/utils/transition";
+import Link from "next/link";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import Link from "next/link";
-import { AnimatePresence } from "framer-motion";
-import { TransitionElement } from "@/lib/utils/transition";
 
 interface Inputs {
   email: string;
   password: string;
 }
 
-const LoginComp = () => {
+const SignUpComp = () => {
   const [inputs, setInputs] = useState<Inputs>({ email: "", password: "" });
   const [status, setStatus] = useState({ loading: false, error: false });
   const [errors, setErrors] = useState<Inputs>({} as Inputs);
@@ -49,9 +48,17 @@ const LoginComp = () => {
   return (
     <TransitionElement>
       <div className="lg:min-w-[20rem] md:min-w-[15rem] p-4 sm:min-w-[10rem] w-11/12 mx-auto duration-200 shadow-lg bg-white rounded-2xl">
-        <h2 className="text-2xl mb-2">
-          Login <span className="text-gray-400 text-sm text-opacity-70">to BGallery</span>
-        </h2>
+        <div className="text-center mb-3">
+          <h2 className="text-2xl">
+            Signup <span className="text-gray-400 text-sm text-opacity-70">to BGallery</span>
+          </h2>
+          <p className="text-sm max-w-sm">
+            By signing up, you agree to our{" "}
+            <span className="text-gray-600 font-bold cursor-pointer">Privacy Policy</span> alongside our{" "}
+            <span className="text-gray-600 font-bold cursor-pointer">Terms</span> and{" "}
+            <span className="text-gray-600 font-bold cursor-pointer">Conditions</span>
+          </p>
+        </div>
 
         <form onSubmit={(e) => handleSubmit(e)}>
           <div className="space-y-4">
@@ -93,17 +100,17 @@ const LoginComp = () => {
                 status.loading ? "hover:bg-transparent" : "hover:bg-gray-600 hover:text-white"
               } duration-200 py-1 rounded-2xl`}
             >
-              {status.loading ? "Hold..." : "Login"}
+              {status.loading ? "Hold..." : "Sign up"}
             </button>
           </div>
         </form>
         <p className="text-sm mt-2 text-center">
-          Don&apos;t have an account?{" "}
+          Have an account?{" "}
           <Link
-            href={"/signup"}
+            href={"/login"}
             className="font-bold text-gray-500 border-b border-gray-500 duration-200 hover:text-gray-700"
           >
-            Create an account
+            Login
           </Link>
         </p>
       </div>
@@ -111,4 +118,4 @@ const LoginComp = () => {
   );
 };
 
-export default LoginComp;
+export default SignUpComp;
