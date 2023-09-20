@@ -1,6 +1,8 @@
 "use client";
 
 import WidthWrapper from "@/components/Common/width-wrapper";
+import { useUser } from "@/lib/contexts/UserProvider";
+import { signOut } from "next-auth/react";
 import Link from "next/link";
 
 interface NavLinks {
@@ -16,6 +18,8 @@ interface NavProps {
 }
 
 const Navbar = ({ isTransparent, tailwindColor }: NavProps) => {
+  const { name } = useUser();
+
   const links: NavLinks[] = [
     {
       label: "Github",
@@ -24,6 +28,9 @@ const Navbar = ({ isTransparent, tailwindColor }: NavProps) => {
       external: true,
     },
     { label: "Slack", path: "#", icon: <i className="ri-slack-line text-base"></i>, external: true },
+  ];
+
+  const actionLinks: NavLinks[] = [
     { label: "Sign up", path: "/signup" },
     { label: "Login", path: "/login" },
   ];
@@ -40,18 +47,39 @@ const Navbar = ({ isTransparent, tailwindColor }: NavProps) => {
         <ul className="flex items-center space-x-4 py-3">
           {links.map((link, idx) => (
             <li key={idx}>
-              <Link
-                href={link.path}
-                className={`${
-                  idx === links.length - 1 &&
-                  "bg-gray-700 duration-200 flex-shrink-0 hover:bg-gray-800 text-white px-5 text-sm py-[.3rem] rounded-2xl"
-                }`}
-                target={link.external ? "_blank" : "_self"}
-              >
+              <Link href={link.path} target={link.external ? "_blank" : "_self"}>
                 {link.icon ? link.icon : link.label}
               </Link>
             </li>
           ))}
+
+          {name ? (
+            <li>
+              <button
+                className="bg-gray-700 duration-200 flex-shrink-0 hover:bg-gray-800 text-white px-5 text-sm py-[.3rem] cursor-pointer rounded-2xl"
+                onClick={() => signOut()}
+              >
+                Logout <i className="ri-logout-box-r-line"></i>
+              </button>
+            </li>
+          ) : (
+            <>
+              {actionLinks.map((link, idx) => (
+                <li key={idx}>
+                  <Link
+                    href={link.path}
+                    className={`${
+                      idx === links.length - 1 &&
+                      "bg-gray-700 duration-200 flex-shrink-0 hover:bg-gray-800 text-white px-5 text-sm py-[.3rem] rounded-2xl"
+                    }`}
+                    target={link.external ? "_blank" : "_self"}
+                  >
+                    {link.icon ? link.icon : link.label}
+                  </Link>
+                </li>
+              ))}
+            </>
+          )}
         </ul>
       </WidthWrapper>
     </nav>
