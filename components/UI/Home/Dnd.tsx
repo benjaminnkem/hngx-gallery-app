@@ -1,5 +1,7 @@
 "use client";
 import WidthWrapper from "@/components/Common/width-wrapper";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import { useCallback, useRef, useState } from "react";
 import { useDrag, useDrop } from "react-dnd";
@@ -7,6 +9,7 @@ import { useDrag, useDrop } from "react-dnd";
 interface CardImage {
   id?: string | number;
   path: string;
+  tag: string;
 }
 
 interface ImageCard {
@@ -15,9 +18,10 @@ interface ImageCard {
   src: string;
   moveImage?: any;
   index?: number;
+  tag: string;
 }
 
-const Card = ({ src, id, index, moveImage }: ImageCard): JSX.Element => {
+const Card = ({ src, id, index, moveImage, tag }: ImageCard): JSX.Element => {
   const ref = useRef<any>(null);
 
   const [, drop] = useDrop({
@@ -70,14 +74,17 @@ const Card = ({ src, id, index, moveImage }: ImageCard): JSX.Element => {
   drag(drop(ref));
 
   return (
-    <div className="overflow-hidden rounded-lg relative group" ref={ref}>
+    <div className="overflow-hidden rounded-lg relative group max-h-[35rem]" ref={ref}>
       <Image
         src={src}
         alt="Image"
-        width={600}
-        height={600}
+        width={700}
+        height={700}
         className="w-full h-full object-cover group-hover:scale-105 duration-200"
       />
+      <p className="text-sm font-bold absolute left-2 top-2 px-3 p-[1.8px] rounded-full border border-ray-400 bg-black bg-opacity-40 text-white text-shadow">
+        {tag}
+      </p>
     </div>
   );
 };
@@ -95,12 +102,48 @@ const Dnd = ({ initImages }: { initImages: CardImage[] }) => {
     });
   }, []);
 
+  const filterImages = (tag: string) => {
+    if (tag === "") {
+      setImages(initImages);
+      return;
+    }
+
+    const updatedImage = images.filter((image) => image.tag.includes(tag));
+    setImages(updatedImage);
+
+    if (updatedImage.length === 0) {
+      const updatedImage = images.filter((image) => image.tag.includes(tag));
+      setImages(updatedImage);
+    }
+  };
+
   return (
     <>
       <WidthWrapper>
-        <div className="my-8 grid grid-cols-3 gap-8">
+        <div className="my-10 space-y-4">
+          <h3 className="font-bold text-xl">Filter Images</h3>
+          <div className="flex items-center space-x-2 border-2 border-[#e9e9e9] max-w-2xl focus-within:border-[#d3d3d3] text-gray-800 duration-200 px-4 rounded-lg shadow-lg bg-white">
+            <FontAwesomeIcon icon={faSearch} />
+            <input
+              type="text"
+              className="w-full bg-transparent py-2 outline-none flex-grow text-gray-800"
+              placeholder="Search for an image"
+              onChange={(e) => filterImages(e.target.value)}
+            />
+          </div>
+        </div>
+
+        <div className="my-8 grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 duration-200 gap-8">
           {images.map((image, index) => (
-            <Card key={index} image={image} src={image.path} id={image.id} index={index} moveImage={moveImage} />
+            <Card
+              key={index}
+              image={image}
+              src={image.path}
+              id={image.id}
+              index={index}
+              moveImage={moveImage}
+              tag={image.tag}
+            />
           ))}
         </div>
       </WidthWrapper>

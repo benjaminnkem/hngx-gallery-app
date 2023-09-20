@@ -53,3 +53,5 @@ body {
 .cat-slider::-webkit-scrollbar {
   display: none;
 }
+
+.text-shadow { text-shadow: 0 0 5px rgba(0, 0, 0, 0.48);}

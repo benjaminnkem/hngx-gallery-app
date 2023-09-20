@@ -9,13 +9,14 @@ import Dnd from "@/components/UI/Home/Dnd";
 interface InitImages {
   id?: string | number;
   path: string;
+  tag: string;
 }
 
 const getImages = async (): Promise<InitImages[]> => {
   const host = headers().get("host");
   const protocol = process.env.NODE_ENV === "development" ? "http://" : "https://";
   try {
-    const res = await fetch(`${protocol}${host}/api/get-images`);
+    const res = await fetch(`${protocol}${host}/api/get-images`, { next: { revalidate: 30 } });
     if (!res.ok) {
       return [];
     }
@@ -47,10 +48,11 @@ const Home = async () => {
 
           <WidthWrapper>
             <div className="flex justify-between gap-20 items-center">
-              <FontAwesomeIcon
+              {/* <FontAwesomeIcon
                 icon={faChevronLeft}
                 className="text-gray-100 text-3xl duration-200 hover:text-white chev cursor-pointer hover:scale-105"
-              />
+              /> */}
+              <div></div>
 
               <div className="text-white space-y-2 flex-grow">
                 <div>
@@ -64,16 +66,18 @@ const Home = async () => {
                   <FontAwesomeIcon icon={faSearch} />
                   <input
                     type="text"
-                    className="w-full bg-transparent py-2 outline-none flex-grow"
+                    className="w-full bg-transparent py-2 outline-none flex-grow opacity-20 cursor-not-allowed"
                     placeholder="Search for an image"
+                    disabled
                   />
                 </div>
               </div>
 
-              <FontAwesomeIcon
+              {/* <FontAwesomeIcon
                 icon={faChevronRight}
                 className="text-gray-100 text-3xl duration-200 hover:text-white chev cursor-pointer hover:scale-105"
-              />
+              /> */}
+              <div></div>
             </div>
           </WidthWrapper>
         </div>
