@@ -2,8 +2,11 @@
 
 import WidthWrapper from "@/components/Common/width-wrapper";
 import { useUser } from "@/lib/contexts/UserProvider";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
+import toast from "react-hot-toast";
 
 interface NavLinks {
   label: string;
@@ -37,7 +40,9 @@ const Navbar = ({ isTransparent, tailwindColor }: NavProps) => {
 
   return (
     <nav
-      className={`sticky top-0 w-full z-[1000] ${isTransparent && "bg-transparent"} ${tailwindColor && tailwindColor}`}
+      className={`sticky top-0 w-full z-[1000] ${isTransparent ? "bg-transparent" : "bg-white"} ${
+        tailwindColor && tailwindColor
+      }`}
     >
       <WidthWrapper addClass="flex items-center gap-28 justify-between">
         <Link href="/" className="text-lg">
@@ -54,14 +59,22 @@ const Navbar = ({ isTransparent, tailwindColor }: NavProps) => {
           ))}
 
           {name ? (
-            <li>
-              <button
-                className="bg-gray-700 duration-200 flex-shrink-0 hover:bg-gray-800 text-white px-5 text-sm py-[.3rem] cursor-pointer rounded-2xl"
-                onClick={() => signOut()}
-              >
-                Logout <i className="ri-logout-box-r-line"></i>
-              </button>
-            </li>
+            <>
+              <li>
+                <FontAwesomeIcon icon={faUser} />
+              </li>
+              <li>
+                <div
+                  className="bg-gray-700 duration-200 flex-shrink-0 hover:bg-gray-800 text-white w-8 h-8 rounded-full grid place-content-center text-sm cursor-pointer"
+                  onClick={() => {
+                    signOut({ redirect: false });
+                    toast.success("You've successfully logged out!");
+                  }}
+                >
+                  <i className="ri-logout-box-r-line"></i>
+                </div>
+              </li>
+            </>
           ) : (
             <>
               {actionLinks.map((link, idx) => (

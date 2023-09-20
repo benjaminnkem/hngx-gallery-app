@@ -3,8 +3,32 @@ import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faChevronRight, faSearch } from "@fortawesome/free-solid-svg-icons";
 import CategoriesSlider from "@/components/UI/Home/category-slider";
+import { headers } from "next/headers";
+import Dnd from "@/components/UI/Home/Dnd";
 
-const Home = () => {
+interface InitImages {
+  id?: string | number;
+  path: string;
+}
+
+const getImages = async (): Promise<InitImages[]> => {
+  const host = headers().get("host");
+  const protocol = process.env.NODE_ENV === "development" ? "http://" : "https://";
+  try {
+    const res = await fetch(`${protocol}${host}/api/get-images`);
+    if (!res.ok) {
+      return [];
+    }
+
+    return res.json();
+  } catch (e) {
+    return [];
+  }
+};
+
+const Home = async () => {
+  const initImages: InitImages[] = await getImages();
+
   return (
     <>
       <div>
@@ -56,7 +80,9 @@ const Home = () => {
       </div>
 
       <main>
-        <section className="my-8"></section>
+        <section id="upload-container">
+          <Dnd initImages={initImages} />
+        </section>
       </main>
     </>
   );
