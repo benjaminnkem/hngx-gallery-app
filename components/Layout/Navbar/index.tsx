@@ -30,7 +30,12 @@ const Navbar = ({ isTransparent, tailwindColor }: NavProps) => {
       icon: <i className="ri-github-line text-base"></i>,
       external: true,
     },
-    { label: "Slack", path: "#", icon: <i className="ri-slack-line text-base"></i>, external: true },
+    {
+      label: "Slack",
+      path: "https://hngix.slack.com/team/U05S1F0RYG1",
+      icon: <i className="ri-slack-line text-base"></i>,
+      external: true,
+    },
   ];
 
   const actionLinks: NavLinks[] = [

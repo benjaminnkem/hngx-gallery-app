@@ -20,7 +20,7 @@ export async function GET(req: NextRequest) {
       { path: "/images/uploads/animal4.jpg", id: uuid(), tag: "animal" },
       { path: "/images/uploads/mountain1.jpg", id: uuid(), tag: "mountain" },
       { path: "/images/uploads/mountain2.jpg", id: uuid(), tag: "mountain" },
-      { path: "/images/uploads/lifestyle.jpg", id: uuid(), tag: "mountain" },
+      { path: "/images/uploads/lifestyle.jpg", id: uuid(), tag: "lifestyle" },
     ];
 
     return NextResponse.json(shuffleArray(images));

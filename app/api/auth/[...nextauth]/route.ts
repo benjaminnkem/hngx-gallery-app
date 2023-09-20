@@ -4,7 +4,7 @@ import { compare } from "bcryptjs";
 import Users from "@/lib/schemas/Users";
 import { connectToDB } from "@/lib/utils/mongo_connection";
 
-export const authOptions: AuthOptions = {
+const authOptions: AuthOptions = {
   providers: [
     CredentialsProvider({
       name: "credentials",
@@ -13,7 +13,8 @@ export const authOptions: AuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, _req) {
-        const { email, password } = credentials;
+        const email = credentials!.email;
+        const password = credentials!.password;
 
         try {
           await connectToDB();

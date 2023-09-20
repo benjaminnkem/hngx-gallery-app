@@ -127,7 +127,7 @@ const Dnd = ({ initImages }: { initImages: CardImage[] }) => {
             <input
               type="text"
               className="w-full bg-transparent py-2 outline-none flex-grow text-gray-800"
-              placeholder="Search for an image"
+              placeholder="filter image by tag"
               onChange={(e) => filterImages(e.target.value)}
             />
           </div>

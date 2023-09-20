@@ -47,7 +47,7 @@ const Home = async () => {
           <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 -z-[5]"></div>
 
           <WidthWrapper>
-            <div className="flex justify-between gap-20 items-center">
+            <div className="flex justify-between lg:gap-20 md:gap-12 gap-1 items-center">
               {/* <FontAwesomeIcon
                 icon={faChevronLeft}
                 className="text-gray-100 text-3xl duration-200 hover:text-white chev cursor-pointer hover:scale-105"
@@ -66,7 +66,7 @@ const Home = async () => {
                   <FontAwesomeIcon icon={faSearch} />
                   <input
                     type="text"
-                    className="w-full bg-transparent py-2 outline-none flex-grow opacity-20 cursor-not-allowed"
+                    className="w-full bg-transparent py-2 outline-none flex-grow opacity-20 cursor-not-allowed mx-auto"
                     placeholder="Search for an image"
                     disabled
                   />
