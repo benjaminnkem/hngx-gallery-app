@@ -10,7 +10,7 @@ const Home = () => {
       <div>
         <CategoriesSlider />
 
-        <div className="relative duration-200 lg:min-h-[30rem] md:min-h-[25rem] sm:min-h-[20rem] min-h-[15rem] flex items-center justify-center">
+        <div className="relative duration-200 lg:min-h-[32rem] md:min-h-[30rem] sm:min-h-[28rem] min-h-[24rem] flex items-center justify-center">
           <Image
             src={`/images/backgrounds/solidity.jpg`}
             alt="Jumbotron Background"

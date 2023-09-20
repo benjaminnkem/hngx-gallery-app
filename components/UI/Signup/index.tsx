@@ -42,7 +42,22 @@ const SignUpComp = () => {
       return;
     }
 
+    const options = { method: "POST", headers: { "Content-type": "application/json" }, body: JSON.stringify(inputs) };
+    const res = await fetch("/api/create/user", options);
+
+    if (!res.ok) {
+      if (res.statusText === "exists") {
+        toast.error("User exists");
+      } else {
+        toast.error("An error occurred");
+      }
+      setStatus({ ...status, loading: false });
+      return;
+    }
+
+    toast.success("Sign up successful");
     setStatus({ ...status, loading: false });
+    setInputs({ email: "", password: "" });
   };
 
   return (
@@ -97,10 +112,10 @@ const SignUpComp = () => {
 
             <button
               className={`w-full border-2 border-gray-600 ${
-                status.loading ? "hover:bg-transparent" : "hover:bg-gray-600 hover:text-white"
+                status.loading ? "hover:bg-transparent opacity-50" : "hover:bg-gray-600 hover:text-white"
               } duration-200 py-1 rounded-2xl`}
             >
-              {status.loading ? "Hold..." : "Sign up"}
+              {status.loading ? "Creating..." : "Sign up"}
             </button>
           </div>
         </form>

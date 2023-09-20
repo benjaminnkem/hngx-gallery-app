@@ -1,5 +1,6 @@
 "use client";
 import { AnimatePresence } from "framer-motion";
+import { SessionProvider } from "next-auth/react";
 import { Toaster, ToastPosition } from "react-hot-toast";
 
 const Provider = ({ children }: { children: React.ReactNode }) => {
@@ -23,10 +24,12 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <>
-      <AnimatePresence>
-        <Toaster toastOptions={toastConfig} />
-        {children}
-      </AnimatePresence>
+      <SessionProvider>
+        <AnimatePresence>
+          <Toaster toastOptions={toastConfig} />
+          {children}
+        </AnimatePresence>
+      </SessionProvider>
     </>
   );
 };
