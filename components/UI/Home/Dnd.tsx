@@ -108,7 +108,7 @@ const Dnd = ({ initImages }: { initImages: CardImage[] }) => {
       return;
     }
 
-    const updatedImage = images.filter((image) => image.tag.includes(tag));
+    const updatedImage = images.filter((image) => image.tag.toLowerCase().includes(tag.toLowerCase()));
     setImages(updatedImage);
 
     if (updatedImage.length === 0) {
@@ -134,17 +134,21 @@ const Dnd = ({ initImages }: { initImages: CardImage[] }) => {
         </div>
 
         <div className="my-8 grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 duration-200 gap-8">
-          {images.map((image, index) => (
-            <Card
-              key={index}
-              image={image}
-              src={image.path}
-              id={image.id}
-              index={index}
-              moveImage={moveImage}
-              tag={image.tag}
-            />
-          ))}
+          {images ? (
+            images.map((image, index) => (
+              <Card
+                key={index}
+                image={image}
+                src={image.path}
+                id={image.id}
+                index={index}
+                moveImage={moveImage}
+                tag={image.tag}
+              />
+            ))
+          ) : (
+            <p className="text-center">No Images</p>
+          )}
         </div>
       </WidthWrapper>
     </>
